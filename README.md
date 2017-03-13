@@ -4,9 +4,9 @@
 
 HnTool is an open source (GPLv2) hardening tool for Unix. It scans your system for vulnerabilities or problems in configuration files allowing you to get a quick overview of the security status of your system.
 
-To use HnTool download it and run: ::
+To try HnTool download it and run: ::
 
-	# ./hntool
+	# ./hntool.py
 
 
 ## Supported systems
@@ -26,13 +26,13 @@ If you are using HnTool on a system that is not listed above, please, let us kno
 
 To install HnTool run the following command, as root:
 
-	# python setup.py install --prefix /usr/ --root /
+	# python setup.py install
 
 ## How to use
 
 Run HnTool with:
 
-	# ./hntool
+	# hntool
 
 You can also see the hntool(1) manual by typing 'man hntool' at the command line or see the usage help:
 
