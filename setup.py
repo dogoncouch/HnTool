@@ -7,13 +7,13 @@ from HnTool import __version__
 
 DATAFILES = [
       (join(prefix, 'share', 'man', 'man1'), [join('doc', 'hntool.1')]),
-      ('share/doc/hntool-%s' % __version__, ['AUTHORS', 'LICENSE', 'NEWS', 'README', 'TODO'])]
+      ('share/doc/hntool-%s' % __version__, ['AUTHORS', 'LICENSE', 'NEWS', 'README.md', 'TODO'])]
 
 setup(name='HnTool',
       version=str(__version__),
       license='GPL-2',
       description='A hardening tool for *nixes',
-      long_description=open('README').read(),
+      long_description=open('README.md').read(),
       author='Hugo Doria',
       author_email='hugodoria@gmail.com',
       url='http://code.google.com/p/hntool/',
