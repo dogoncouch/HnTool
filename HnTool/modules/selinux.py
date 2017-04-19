@@ -31,9 +31,6 @@ class Rule(MasterRule):
         self.long_name="Checks SELinux configuration"
         self.type="config"
         self.required_files = ['/etc/selinux/config']
-        # TO DO: add try/except to get live config settings
-        # sestatus, checklive
-        # Compare to configured settings
 
     def requires(self):
         return self.required_files
@@ -79,7 +76,6 @@ class Rule(MasterRule):
                 else:
                     check_results['high'].append('SELinux policy type not found')
 
-            # To Do: add check to make sure live env matches config
             liveconfig = os.popen('sestatus').readlines()
             optionformat = re.compile('(.*):')
             checklive = {}
@@ -88,7 +84,6 @@ class Rule(MasterRule):
                 thing = item.rstrip()
                 itemname = re.findall(optionformat, thing)
                 itemval = shlex.split(thing)[-1]
-                # itemval = thing.split(':')[-1].rstrip()
                 checklive[itemname[0]] = itemval
 
             if 'bash' in checklive:
