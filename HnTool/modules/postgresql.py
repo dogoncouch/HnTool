@@ -38,9 +38,18 @@ class Rule(MasterRule):
         pgconf = HnTool.modules.util.find_file('/etc/postgresql',
                 'postgresql.conf')
         if pgconf: self.required_files.append(pgconf)
+        else:
+            pgconf = HnTool.modules.util.find_file('/var/lib/pgsql/data',
+                    'postgresql.conf')
+            if pgconf: self.required_files.append(pgconf)
+        
         hbaconf = HnTool.modules.util.find_file('/etc/postgresql',
                 'pg_hba.conf')
         if hbaconf: self.required_files.append(hbaconf)
+        else:
+            hbaconf = HnTool.modules.util.find_file('/var/lib/pgsql/data',
+                    'pg_hba.conf')
+            if hbaconf: self.required_files.append(hbaconf)
         
         # Return something even if nothing was found, so module will be
         # skipped:
