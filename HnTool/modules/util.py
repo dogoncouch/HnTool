@@ -97,9 +97,15 @@ def hntool_conf_parser_equals(pfile):
 def requirements_met(pfile):
     '''This method should check if all the requirements (files)
     are met (one or more files can be found on the system)'''
-
+    
     for f in pfile:
-        if not os.path.isfile(f):
-            return False
+        if os.path.isfile(f):
+            return True
 
-    return True
+    return False
+
+def find_file(basepath, filename):
+    '''Find the first file named filename in path basepath'''
+    for root, subs, files in os.walk(basepath):
+        if filename in files:
+            return os.path.join(root, filename)

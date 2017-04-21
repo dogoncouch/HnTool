@@ -20,6 +20,7 @@
 
 import os
 import shlex
+import HnTool.modules.util
 from HnTool.modules.rule import Rule as MasterRule
 
 class Rule(MasterRule):
@@ -28,9 +29,23 @@ class Rule(MasterRule):
         self.short_name="postgresql"
         self.long_name="Check security problems on PostgreSQL configuration files"
         self.type="config"
-        self.required_files = ['/var/lib/pgsql/data/pg_hba.conf','/var/lib/pgsql/data/postgresql.conf']
+
+        # Fixed for differing config file locations:
+        # self.required_files = ['/var/lib/pgsql/data/pg_hba.conf','/var/lib/pgsql/data/postgresql.conf']
+        self.required_files = []
 
     def requires(self):
+        # Find config files:
+        pgconf = HnTool.modules.util.find_file('/etc/postgresql',
+                'postgresql.conf')
+        if pgconf != None: self.required_files.append(pgconf)
+        hbaconf = HnTool.modules.util.find_file('/etc/postgresql',
+                'pg_hba.conf')
+        if pgconf != None: self.required_files.append(hbaconf)
+        # Return something even if nothing was found, so module will be
+        # skipped:
+        if self.required_files == []:
+            self.required_files.append('/etc/postgresql/postgresql.conf')
         return self.required_files
 
     def analyze(self, options):
