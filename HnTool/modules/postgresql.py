@@ -30,31 +30,18 @@ class Rule(MasterRule):
         self.long_name="Check security problems on PostgreSQL configuration files"
         self.type="config"
 
-        # Fixed for differing config file locations:
-        # self.required_files = ['/var/lib/pgsql/data/pg_hba.conf','/var/lib/pgsql/data/postgresql.conf']
-        self.required_files = []
+        self.required_files = ['/var/lib/pgsql/data/pg_hba.conf','/var/lib/pgsql/data/postgresql.conf']
         
-        # Find config files:
+        # Find config files in /etc:
         pgconf = HnTool.modules.util.find_file('/etc/postgresql',
                 'postgresql.conf')
         if pgconf: self.required_files.append(pgconf)
-        else:
-            pgconf = HnTool.modules.util.find_file('/var/lib/pgsql/data',
-                    'postgresql.conf')
-            if pgconf: self.required_files.append(pgconf)
+        del(pgconf)
         
         hbaconf = HnTool.modules.util.find_file('/etc/postgresql',
                 'pg_hba.conf')
         if hbaconf: self.required_files.append(hbaconf)
-        else:
-            hbaconf = HnTool.modules.util.find_file('/var/lib/pgsql/data',
-                    'pg_hba.conf')
-            if hbaconf: self.required_files.append(hbaconf)
-        
-        # Return something even if nothing was found, so module will be
-        # skipped:
-        if self.required_files == []:
-            self.required_files.append('/etc/postgresql/postgresql.conf')
+        del(hbaconf)
 
     def requires(self):
         return self.required_files

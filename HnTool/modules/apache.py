@@ -32,22 +32,9 @@ class Rule(MasterRule):
         self.long_name="Checks security problems on Apache config file"
         self.type="config"
         
-        # Fixed for different file locations across distributions:
-        # self.required_files = ['/etc/httpd/conf/httpd.conf',
-        #                    '/etc/apache2/conf.d/security',
-        #                    '/etc/apache2/apache2.conf']
-        self.required_files = []
-        self.possible_files = ['/etc/httpd.conf',
-                '/etc/httpd/conf/httpd.conf',
-                '/etc/apache2/conf.d/security',
-                '/etc/apache2/apache2.conf']
-        for f in self.possible_files:
-            if os.path.isfile(f):
-                self.required_files.append(f)
-        # Return a requirement even if no files are found,
-        # so module will be skipped:
-        if len(self.required_files) == 0:
-            self.required_files = ['/etc/httpd.conf']
+        self.required_files = ['/etc/httpd/conf/httpd.conf',
+                           '/etc/apache2/conf.d/security',
+                           '/etc/apache2/apache2.conf']
 
         options.add_option(
             '--apache_conf',
