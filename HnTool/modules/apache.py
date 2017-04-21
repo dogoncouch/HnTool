@@ -37,16 +37,6 @@ class Rule(MasterRule):
         #                    '/etc/apache2/conf.d/security',
         #                    '/etc/apache2/apache2.conf']
         self.required_files = []
-
-        options.add_option(
-            '--apache_conf',
-            action='append',
-            dest='apache_conf',
-            help='adds a apache configuration file to the list of files to' +
-            ' analize'
-        )
-
-    def requires(self):
         self.possible_files = ['/etc/httpd.conf',
                 '/etc/httpd/conf/httpd.conf',
                 '/etc/apache2/conf.d/security',
@@ -58,6 +48,16 @@ class Rule(MasterRule):
         # so module will be skipped:
         if len(self.required_files) == 0:
             self.required_files = ['/etc/httpd.conf']
+
+        options.add_option(
+            '--apache_conf',
+            action='append',
+            dest='apache_conf',
+            help='adds a apache configuration file to the list of files to' +
+            ' analize'
+        )
+
+    def requires(self):
         return self.required_files
 
     def analyze(self, options):

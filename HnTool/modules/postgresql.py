@@ -33,19 +33,21 @@ class Rule(MasterRule):
         # Fixed for differing config file locations:
         # self.required_files = ['/var/lib/pgsql/data/pg_hba.conf','/var/lib/pgsql/data/postgresql.conf']
         self.required_files = []
-
-    def requires(self):
+        
         # Find config files:
         pgconf = HnTool.modules.util.find_file('/etc/postgresql',
                 'postgresql.conf')
-        if pgconf != None: self.required_files.append(pgconf)
+        if pgconf: self.required_files.append(pgconf)
         hbaconf = HnTool.modules.util.find_file('/etc/postgresql',
                 'pg_hba.conf')
-        if pgconf != None: self.required_files.append(hbaconf)
+        if hbaconf: self.required_files.append(hbaconf)
+        
         # Return something even if nothing was found, so module will be
         # skipped:
         if self.required_files == []:
             self.required_files.append('/etc/postgresql/postgresql.conf')
+
+    def requires(self):
         return self.required_files
 
     def analyze(self, options):
